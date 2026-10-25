@@ -79,8 +79,7 @@ jobs:
 
     # Execute all unit tests in the solution
     - name: Execute unit tests
-      run: dotnet test
-      working-directory: ./PartsUnlimited-aspnet45
+      run: vstest.console.exe "PartsUnlimited-aspnet45\test\PartsUnlimited.UnitTests\bin\Release\PartsUnlimited.UnitTests.dll"
 
     # Restore the application to populate the obj folder with RuntimeIdentifiers
     - name: Restore the application
