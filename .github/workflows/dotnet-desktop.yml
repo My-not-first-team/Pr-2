@@ -36,7 +36,7 @@
 # For a complete CI/CD sample to get started with GitHub Action workflows for Desktop Applications,
 # refer to https://github.com/microsoft/github-actions-for-desktop-apps
 
-name: ASP.NET CI
+name: .NET CI
 
 on:
   push:
@@ -44,35 +44,21 @@ on:
 
 jobs:
   build:
-    runs-on: [self-hosted, Windows, X64]
+    runs-on: self-hosted
 
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
-
-    - name: Debug Directory Structure
-      shell: cmd
-      run: |
-        echo "Current directory:"
-        cd
-        echo "Directory contents:"
-        dir /s /b
-
-    - name: Setup NuGet
-      uses: NuGet/setup-nuget@v2
-
-    - name: Restore NuGet packages
-      shell: cmd
-      run: nuget restore PartsUnlimited-aspnet45\PartsUnlimited.sln
-
-    - name: Setup MSBuild
-      uses: microsoft/setup-msbuild@v2
-
-    - name: Build solution
-      run: msbuild "${{ github.workspace }}\PartsUnlimited-aspnet45\PartsUnlimited.sln" /p:Configuration=Release
-
-    - name: Setup VSTest
-      uses: darenm/Setup-VSTest@v1
-
-    - name: Execute unit tests
-      run: vstest.console.exe "${{ github.workspace }}\PartsUnlimited-aspnet45\test\PartsUnlimited.UnitTests\bin\Release\PartsUnlimited.UnitTests.dll"
+    - uses: actions/checkout@v4
+    
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: '8.0.x' 
+        
+    - name: Restore dependencies
+      run: dotnet restore SimpleApp.sln
+      
+    - name: Build
+      run: dotnet build SimpleApp.sln --no-restore
+      
+    - name: Test
+      run: dotnet test SimpleApp.sln --no-build
