@@ -54,16 +54,19 @@ jobs:
       uses: NuGet/setup-nuget@v2
 
     - name: Restore NuGet packages
-      run: nuget restore PartsUnlimited-aspnet45\PartsUnlimited.sln
+      working-directory: ./PartsUnlimited-aspnet45
+      run: nuget restore PartsUnlimited.sln
 
     - name: Setup MSBuild
       uses: microsoft/setup-msbuild@v2
 
     - name: Build solution
-      run: msbuild PartsUnlimited-aspnet45\PartsUnlimited.sln /p:Configuration=Release
+      working-directory: ./PartsUnlimited-aspnet45
+      run: msbuild PartsUnlimited.sln /p:Configuration=Release
 
     - name: Setup VSTest
       uses: darenm/Setup-VSTest@v1
 
     - name: Execute unit tests
-      run: vstest.console.exe "PartsUnlimited-aspnet45\test\PartsUnlimited.UnitTests\bin\Release\PartsUnlimited.UnitTests.dll"
+      working-directory: ./PartsUnlimited-aspnet45
+      run: vstest.console.exe "test\PartsUnlimited.UnitTests\bin\Release\PartsUnlimited.UnitTests.dll"
