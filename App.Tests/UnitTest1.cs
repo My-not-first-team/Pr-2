@@ -1,6 +1,6 @@
 using Xunit;
 
-namespace App.Testst
+namespace App.Tests
 {
     public class UnitTest1
   {
