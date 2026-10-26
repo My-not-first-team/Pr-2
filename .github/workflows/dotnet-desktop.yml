@@ -61,4 +61,4 @@ jobs:
       run: dotnet build SimpleApp.sln --no-restore
       
     - name: Test
-      run: dotnet test SimpleApp.sln --no-build --logger "console;verbosity=detailed"
+      run: dotnet test App.Tests/App.Tests.csproj --logger "console;verbosity=detailed"
